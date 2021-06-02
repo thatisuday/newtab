@@ -3,12 +3,14 @@ var loader = document.getElementById('loader');
 var overlay = document.getElementById('overlay');
 var page = document.getElementById('page');
 
-chrome.storage.sync.get('tabUrl', function(results) {
-  var tabUrl = results.tabUrl;
+chrome.storage.sync.get(['tabUrls', 'currentUrlIndex'], function(results) {
+  var tabUrls = JSON.parse(results.tabUrls);
+  var currentUrlIndex = results.currentUrlIndex;
 
-  if (tabUrl) {
+  if (tabUrls[currentUrlIndex]) {
     iframe.src = tabUrl;
-    return;
+    var nextTabIndex = currentUrlIndex < currentUrlIndex.length - 1 ? currentUrlIndex + 1 : 0;
+    return chrome.storage.sync.set({ currentUrlIndex: nextTabIndex });
   }
 
   overlay.style.display = null;
