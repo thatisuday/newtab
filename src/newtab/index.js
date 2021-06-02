@@ -9,7 +9,7 @@ chrome.storage.sync.get(['tabUrls', 'currentUrlIndex'], function(results) {
 
   if (tabUrls[currentUrlIndex]) {
     iframe.src = tabUrls[currentUrlIndex];
-    var nextTabIndex = currentUrlIndex < currentUrlIndex.length - 1 ? currentUrlIndex + 1 : 0;
+    var nextTabIndex = currentUrlIndex < tabUrls.length - 1 ? currentUrlIndex + 1 : 0;
     return chrome.storage.sync.set({ currentUrlIndex: nextTabIndex });
   }
 
